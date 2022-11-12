@@ -14,15 +14,53 @@ header {
     background-color: rgb(52, 52, 52);
 }
 
-header h1 {
-    margin-left: 30px;
+header h1,
+header p {
     color: rgb(242, 242, 242)
 }
 
+header h1 {
+    margin-left: 30px;
+}
+
+.rest {
+    display: flex;
+    flex-grow: 1;
+}
+
+.box {
+    background-color: rgba(0,0,0,.7);
+    padding: 10px;
+}
+
 .box ul {
+    height: 100%;
+    gap: 10px;
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.box ul li {
+    display: flex;
+    flex-grow: 1;
+}
+
+.box button {
+    flex-grow: 1;
 }
 
 img {
-    width: 100%;
+    width: 1903px;
+}
+
+.message {
+    position: absolute;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    z-index: 1;
 }

@@ -1,16 +1,25 @@
 import Game from "./Game";
 import "./assets/style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getPlayer } from "./db";
 
 function App() {
   const [time, setTime] = useState(0);
+  const [player, setPlayer] = useState(getPlayer());
 
-  setInterval(() => {
-    setTime(time + 1);
-  }, 1000);
+  useEffect(() => {
+    function timer() {
+      setInterval(() => {
+        setTime((prevValue) => prevValue + 1);
+      }, 1000);
+    }
+
+    return () => {
+      timer();
+    };
+  }, []);
 
   function showTimer() {
-    console.log(time);
     let hours = String(Math.floor(time / 3600)).padStart(2, "0");
     let resultTime = time % 3600;
     let minutes = String(Math.floor(resultTime / 60)).padStart(2, "0");
@@ -22,11 +31,20 @@ function App() {
     );
   }
 
+  function leftCharacters() {
+    console.log(player.characters);
+  }
+
   return (
     <div className="App">
       <header>
-        <h1>FindCharacters</h1>
-        <p>{showTimer()}</p>
+        <div className="title">
+          <h1>FindCharacters</h1>
+        </div>
+        <div className="rest">
+          {showTimer()}
+          {/* {leftCharacters()} */}
+        </div>
       </header>
       <Game />
     </div>
