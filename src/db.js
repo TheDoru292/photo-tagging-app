@@ -1,20 +1,20 @@
 const character = [
   {
-    name: "Asuka",
+    name: "asuka",
     minX: 417,
     maxX: 491,
     minY: 341,
     maxY: 484,
   },
   {
-    name: "Jotaro",
+    name: "jotaro",
     minX: 1460,
     maxX: 1556,
     minY: 90,
     maxY: 189,
   },
   {
-    name: "Saitama",
+    name: "saitama",
     minX: 814,
     maxX: 866,
     minY: 412,
@@ -22,21 +22,36 @@ const character = [
   },
 ];
 
-const player = {
-  uid: 999999,
-  characters: {
-    asuka: false,
-    jotaro: false,
-    saitama: false,
+const player = [
+  {
+    uid: 999999,
+    characters: {
+      asuka: false,
+      jotaro: false,
+      saitama: false,
+    },
   },
-};
+  {
+    uid: 1234567,
+    characters: {
+      asuka: false,
+      jotaro: false,
+      saitama: false,
+    },
+  },
+];
 
 function getCharacters() {
   return character;
 }
 
-function getPlayer() {
-  return player;
+function getPlayer(uid) {
+  let playerFound = player.filter((item) => item.uid === uid);
+  return playerFound[0];
 }
 
-export { getCharacters, getPlayer };
+function getUid() {
+  return player.uid;
+}
+
+export { getCharacters, getPlayer, getUid };

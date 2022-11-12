@@ -2,12 +2,35 @@ import Game from "./Game";
 import "./assets/style.css";
 import { useEffect, useState } from "react";
 import { getPlayer } from "./db";
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
+
+const firebaseConfig = {};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+function signInAnon() {
+  signInAnonymously(auth)
+    .then(() => console.log("Logged in!"))
+    .catch((error) => console.log(error.code, error.message));
+}
+
+function initFirebaseAuth() {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+    }
+  });
+}
+
+signInAnon();
 
 function App() {
   const [time, setTime] = useState(0);
   const [player, setPlayer] = useState(getPlayer());
 
   useEffect(() => {
+    initFirebaseAuth();
     function timer() {
       setInterval(() => {
         setTime((prevValue) => prevValue + 1);

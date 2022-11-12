@@ -51,7 +51,7 @@ header h1 {
 }
 
 img {
-    width: 1903px;
+    width: 100%;
 }
 
 .message {
@@ -61,6 +61,12 @@ img {
     padding: 10px;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
     height: 20px;
     z-index: 1;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
 }

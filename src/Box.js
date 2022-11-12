@@ -1,7 +1,8 @@
-import { getCharacters } from "./db";
+import { getCharacters, getPlayer } from "./db";
 
 function Box({ coordinates, cb }) {
   const character = getCharacters();
+  const uid = 1234567;
 
   const styling = {
     position: "absolute",
@@ -12,16 +13,31 @@ function Box({ coordinates, cb }) {
     borderRadius: 5 + "px",
   };
 
+  function setPlayerChara(name) {
+    const player = getPlayer(uid);
+
+    const newPlayer = {
+      ...player,
+      characters: {
+        ...player.characters,
+        [name]: true,
+      },
+    };
+
+    // queryToDb(newPlayer)
+  }
+
   function checkIfInBox(name) {
     const chara = character.filter((item) => item.name === name);
 
     if (
-      chara[0].minX < coordinates.x &&
-      chara[0].maxX > coordinates.x &&
-      chara[0].minY < coordinates.y &&
-      chara[0].maxY > coordinates.y
+      chara[0].minX < coordinates.relativeX &&
+      chara[0].maxX > coordinates.relativeX &&
+      chara[0].minY < coordinates.relativeY &&
+      chara[0].maxY > coordinates.relativeY
     ) {
       cb(`You found ${chara[0].name}!`);
+      setPlayerChara(chara[0].name);
     } else {
       cb("Wrong character! Try again!", true);
     }
@@ -31,13 +47,13 @@ function Box({ coordinates, cb }) {
     <div className="box" style={styling}>
       <ul>
         <li>
-          <button onClick={() => checkIfInBox("Jotaro")}>Jotaro Kujo</button>
+          <button onClick={() => checkIfInBox("jotaro")}>Jotaro Kujo</button>
         </li>
         <li>
-          <button onClick={() => checkIfInBox("Saitama")}>Saitama</button>
+          <button onClick={() => checkIfInBox("saitama")}>Saitama</button>
         </li>
         <li>
-          <button onClick={() => checkIfInBox("Asuka")}>Asuka</button>
+          <button onClick={() => checkIfInBox("asuka")}>Asuka</button>
         </li>
       </ul>
     </div>
