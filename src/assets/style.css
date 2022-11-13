@@ -25,12 +25,26 @@ header h1 {
 
 .rest {
     display: flex;
+    font-size: 22px;
+    gap: 10px;
     flex-grow: 1;
+}
+
+.rest p:first-child {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    margin-right: 30px;
+}
+
+.rest p:last-child {
+    margin-right: 30px;
 }
 
 .box {
     background-color: rgba(0,0,0,.7);
     padding: 10px;
+    z-index: 1;
 }
 
 .box ul {
@@ -69,4 +83,56 @@ img {
 .game {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.instructions, .leaderboard {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 10px;
+    width: 500px;
+    height: 475px;
+    color: rgb(236, 236, 236);
+    background-color: rgb(53, 53, 53);
+    z-index: 1;
+}
+
+.instructions h1 {
+    margin: 0 auto;
+}
+
+.instructions button {
+    margin: 0 auto;
+    height: 30px;
+    width: 100px;
+}
+
+.characters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 22px;
+}
+
+.card img {
+    width: 110px;
+}
+
+.card p {
+    flex-grow: 1;
+}
+
+.lead {
+    display: flex;
+    gap: 5px;
 }

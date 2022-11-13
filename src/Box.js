@@ -1,8 +1,9 @@
-import { getCharacters, getPlayer } from "./db";
+import { useEffect, useState } from "react";
+import { editUserData, getCharacters, getUserData } from "./App";
 
-function Box({ coordinates, cb }) {
-  const character = getCharacters();
-  const uid = 1234567;
+function Box({ coordinates, cb, state }) {
+  const [player, setPlayer] = useState();
+  const [loading, setLoading] = useState(true);
 
   const styling = {
     position: "absolute",
@@ -13,24 +14,31 @@ function Box({ coordinates, cb }) {
     borderRadius: 5 + "px",
   };
 
-  function setPlayerChara(name) {
-    const player = getPlayer(uid);
+  useEffect(() => {
+    if (loading === true) {
+      async function getData() {
+        setPlayer(await getUserData());
+      }
 
-    const newPlayer = {
-      ...player,
-      characters: {
-        ...player.characters,
-        [name]: true,
-      },
-    };
+      getData();
 
-    // queryToDb(newPlayer)
+      setLoading(false);
+    }
+  }, [loading, setLoading, player]);
+
+  async function setPlayerChara(name) {
+    editUserData(player, name);
+    state(false);
   }
 
-  function checkIfInBox(name) {
-    const chara = character.filter((item) => item.name === name);
+  async function checkIfInBox(name) {
+    const character = await getCharacters();
 
-    if (
+    const chara = character.characters.filter((item) => item.name === name);
+
+    if (player.charactersLeft === 0) {
+      console.log("Woah there buddy");
+    } else if (
       chara[0].minX < coordinates.relativeX &&
       chara[0].maxX > coordinates.relativeX &&
       chara[0].minY < coordinates.relativeY &&
