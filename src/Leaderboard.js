@@ -4,6 +4,7 @@ import { addUserScore, getLeaderboard } from "./App";
 function Leaderboard({ playerTime }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const [submit, setSubmit] = useState(false);
+  const [submited, setSubmited] = useState(false);
   const [name, setName] = useState("");
 
   async function getLead() {
@@ -36,6 +37,7 @@ function Leaderboard({ playerTime }) {
     event.preventDefault();
     await addUserScore(name, playerTime);
     setSubmit(false);
+    setSubmited(true);
   }
 
   function displaySubmitScore() {
@@ -85,8 +87,13 @@ function Leaderboard({ playerTime }) {
             })}
           </div>
           <div className="lead-buttons">
-            <button onClick={() => setSubmit(true)}>Submit score</button>
-            <button>Retry</button>
+            <button
+              disabled={submited === true ? true : false}
+              onClick={() => setSubmit(true)}
+            >
+              Submit score
+            </button>
+            <button onClick={() => window.location.reload(false)}>Retry</button>
           </div>
         </div>
       );
@@ -98,7 +105,7 @@ function Leaderboard({ playerTime }) {
           </div>
           <div className="lead-buttons">
             <button onClick={() => setSubmit(true)}>Submit score</button>
-            <button>Retry</button>
+            <button onClick={() => window.location.reload(false)}>Retry</button>
           </div>
         </div>
       );
