@@ -106,7 +106,10 @@ function Game({ time, charactersLeft, cb }) {
   }
 
   const imgStyling = {
-    filter: showInstructions === true ? "brightness(50%)" : "brightness(100%)",
+    filter:
+      showInstructions === true || leaderboard === true
+        ? "brightness(50%)"
+        : "brightness(100%)",
   };
 
   return (
