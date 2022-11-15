@@ -14,6 +14,7 @@ import {
   orderBy,
   limit,
   getDocs,
+  addDoc,
 } from "firebase/firestore";
 import Timer from "./Timer";
 
@@ -23,15 +24,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const firstTime = localStorage.getItem("account");
-
 function signInAnon() {
   signInAnonymously(auth)
     .then(() => {
       console.log("Logged in!");
-      if (firstTime === null) {
-        createUserDb();
-      }
+      createUserDb();
     })
     .catch((error) => console.log(error.code, error.message));
 }
@@ -48,6 +45,13 @@ async function createUserDb() {
   });
 
   localStorage.setItem("account", true);
+}
+
+async function addUserScore(name, time) {
+  await addDoc(collection(db, "leaderboard"), {
+    name: name,
+    time: time,
+  });
 }
 
 async function editUserData(obj, name) {
@@ -103,7 +107,7 @@ signInAnon();
 function App() {
   const [loading, setLoading] = useState(true);
   const [player, setPlayer] = useState();
-  const [seconds, setSeconds] = useState();
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -124,6 +128,7 @@ function App() {
 
   function setTime(time) {
     setSeconds(time);
+    console.log("I'm running", time);
   }
 
   function firstLoad() {
@@ -151,4 +156,10 @@ function App() {
 }
 
 export default App;
-export { getUserData, editUserData, getCharacters, getLeaderboard };
+export {
+  getUserData,
+  editUserData,
+  getCharacters,
+  getLeaderboard,
+  addUserScore,
+};

@@ -14,6 +14,7 @@ function Game({ time, charactersLeft, cb }) {
     if (charactersLeft === 0) {
       setLeaderboard(true);
     }
+    console.log(time);
   }, [charactersLeft]);
 
   function handleClick(event) {
@@ -100,7 +101,7 @@ function Game({ time, charactersLeft, cb }) {
 
   function leaderboardElement() {
     if (leaderboard === true) {
-      return <Leaderboard />;
+      return <Leaderboard playerTime={time} />;
     }
   }
 

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { getLeaderboard } from "./App";
+import { addUserScore, getLeaderboard } from "./App";
 
-function Leaderboard() {
+function Leaderboard({ playerTime }) {
   const [leaderboard, setLeaderboard] = useState([]);
+  const [submit, setSubmit] = useState(false);
+  const [name, setName] = useState("");
+
+  async function getLead() {
+    const lead = await getLeaderboard();
+
+    setLeaderboard(lead);
+  }
 
   useEffect(() => {
-    async function getLead() {
-      const lead = await getLeaderboard();
-
-      setLeaderboard(lead);
-    }
-
     getLead();
   }, []);
 
@@ -30,18 +32,85 @@ function Leaderboard() {
     return string;
   }
 
+  async function submitScore(event) {
+    event.preventDefault();
+    await addUserScore(name, playerTime);
+    setSubmit(false);
+  }
+
+  function displaySubmitScore() {
+    return (
+      <div className="lead">
+        <form onSubmit={(e) => submitScore(e)} action="">
+          <div className="lead-child">
+            <label className="wh100" htmlFor="player-name">
+              Player Name
+            </label>
+            <input
+              type="text"
+              name="player-name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              id="player-name"
+            />
+          </div>
+          <div className="lead-child">
+            <p className="wh100">Your time:</p>
+            <p>{formatTime(playerTime)}</p>
+          </div>
+          <div className="lead-buttons">
+            <button type="submit">Submit score</button>
+            <button onClick={() => setSubmit(false)}>Cancel</button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  function displayLeaderboard() {
+    getLead();
+
+    if (leaderboard.length > 0) {
+      return (
+        <div className="lead">
+          <div className="lead-score-div">
+            {leaderboard.map((item, i) => {
+              return (
+                <div className="score">
+                  <p className="lead-ranking">{i + 1}.</p>
+                  <p className="lead-nickname">{item.name}</p>
+                  <p className="lead-timing">{formatTime(item.time)}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="lead-buttons">
+            <button onClick={() => setSubmit(true)}>Submit score</button>
+            <button>Retry</button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="lead">
+          <div className="lead-score-div">
+            <p>There are no scores submitted yet! Want to submit yours?</p>
+          </div>
+          <div className="lead-buttons">
+            <button onClick={() => setSubmit(true)}>Submit score</button>
+            <button>Retry</button>
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="leaderboard">
       <h1>Leaderboard</h1>
-      {leaderboard.map((item, i) => {
-        return (
-          <div className="lead">
-            <p>{i + 1}</p>
-            <p>{item.name}</p>
-            <p>{formatTime(item.time)}</p>
-          </div>
-        );
-      })}
+      <div className="lead-container">
+        {submit === true ? displaySubmitScore() : displayLeaderboard()}
+      </div>
     </div>
   );
 }

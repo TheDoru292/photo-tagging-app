@@ -9,7 +9,7 @@ header {
     position: sticky;
     top: 0;
     height: 50px;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     background-color: rgb(52, 52, 52);
 }
@@ -86,7 +86,11 @@ img {
     align-items: center;
 }
 
-.instructions, .leaderboard {
+.score {
+    display: flex;
+} 
+
+.instructions {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -97,6 +101,18 @@ img {
     color: rgb(236, 236, 236);
     background-color: rgb(53, 53, 53);
     z-index: 1;
+}
+
+.leaderboard { 
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px;
+    width: 500px;
+    color: rgb(236, 236, 236);
+    background-color: rgb(53, 53, 53);
 }
 
 .instructions h1 {
@@ -132,7 +148,67 @@ img {
     flex-grow: 1;
 }
 
+.leaderboard h1 {
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.lead-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+}
+
 .lead {
     display: flex;
+    flex-direction: column;
     gap: 5px;
+    height: 100%;
+}
+
+.lead-score-div {
+    flex-grow: 1;
+}
+
+.lead-ranking {
+    width: 20px;
+}
+
+.lead-nickname {
+    flex-grow: 1;
+}
+
+.lead-timing {
+    display: flex;
+    width: 70px;
+    justify-content: flex-end;
+}
+
+.lead-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    gap: 10px;
+}
+
+.lead-buttons button {
+    height: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.lead-child {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.wh100 {
+    width: 100px;
+}
+
+.lead-child input {
+    width: 150px;
 }
